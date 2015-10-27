@@ -133,4 +133,23 @@ class Rongcloud
 
         return $ret;
     }
+
+    /**
+     * 处理返回结果
+     *
+     * @param $result
+     *
+     * @return mixed
+     * @throws BaseException
+     */
+    public function createResponse($result)
+    {
+        $response = json_decode($result, true);
+
+        if (empty($response) || !is_array($response)) {
+            throw new BaseException('Response Format Error');
+        }
+
+        return $response;
+    }
 }

@@ -26,6 +26,8 @@ class RongUser extends Rongcloud
      * @param string $portraitUri 用户头像 URI，最大长度 1024 字节。
      *
      * @return mixed
+     * @throws Exceptions\BaseException
+     * @throws UserException
      */
     public function getToken($userId, $name, $portraitUri)
     {
@@ -43,7 +45,7 @@ class RongUser extends Rongcloud
                 throw new UserException('请求失败');
             }
 
-            return $ret;
+            return $this->createResponse($ret);
         } catch (UserException $e) {
             throw new UserException($e->getMessage());
         }
