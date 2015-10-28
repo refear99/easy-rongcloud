@@ -19,6 +19,7 @@ use Refear99\EasyRongcloud\Exceptions\UserException;
 class RongMessage extends Rongcloud
 {
     /**
+     * TODO
      * 发送会话消息
      * @param $fromUserId   发送人用户 Id。（必传）
      * @param $toUserId     接收用户 Id，提供多个本参数可以实现向多人发送消息。（必传）
@@ -58,6 +59,7 @@ class RongMessage extends Rongcloud
     }
 
     /**
+     * TODO
      * 以一个用户身份向群组发送消息
      * @param $fromUserId           发送人用户 Id。（必传）
      * @param $toGroupId             接收群Id，提供多个本参数可以实现向多群发送消息。（必传）
@@ -98,6 +100,7 @@ class RongMessage extends Rongcloud
 
 
     /**
+     * TODO
      * 一个用户向聊天室发送消息
      * @param $fromUserId               发送人用户 Id。（必传）
      * @param $toChatroomId             接收聊天室Id，提供多个本参数可以实现向多个聊天室发送消息。（必传）
@@ -132,6 +135,7 @@ class RongMessage extends Rongcloud
     }
 
     /**
+     * TODO
      * 发送讨论组消息
      * @param $fromUserId               发送人用户 Id。（必传）
      * @param $toDiscussionId             接收讨论组 Id。（必传）
@@ -171,6 +175,7 @@ class RongMessage extends Rongcloud
     }
 
     /**
+     * TODO
      * 一个用户向一个或多个用户发送系统消息
      * @param $fromUserId       发送人用户 Id。（必传）
      * @param $toUserId         接收用户Id，提供多个本参数可以实现向多用户发送系统消息。（必传）
@@ -210,6 +215,7 @@ class RongMessage extends Rongcloud
     }
 
     /**
+     * TODO
      * 某发送消息给一个应用下的所有注册用户。
      * @param $fromUserId       发送人用户 Id。（必传）
      * @param $objectName       消息类型，参考融云消息类型表.消息标志；可自定义消息类型。（必传）
@@ -241,6 +247,7 @@ class RongMessage extends Rongcloud
     }
 
     /**
+     * TODO
      * 获取 APP 内指定某天某小时内的所有会话消息记录的下载地址
      * @param $date     指定北京时间某天某小时，格式为：2014010101,表示：2014年1月1日凌晨1点。（必传）
      * @return json|xml
@@ -259,6 +266,7 @@ class RongMessage extends Rongcloud
     }
 
     /**
+     * TODO
      * 删除 APP 内指定某天某小时内的所有会话消息记录
      * @param $date string 指定北京时间某天某小时，格式为2014010101,表示：2014年1月1日凌晨1点。（必传）
      * @return mixed

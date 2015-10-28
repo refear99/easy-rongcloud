@@ -19,6 +19,7 @@ use Refear99\EasyRongcloud\Exceptions\UserException;
 class RongSetting extends Rongcloud
 {
     /**
+     * TODO
      * 添加敏感词
      * @param $word 敏感词，最长不超过 32 个字符。（必传）
      * @return mixed
@@ -38,6 +39,7 @@ class RongSetting extends Rongcloud
     }
 
     /**
+     * TODO
      * 移除敏感词
      * @param $word 敏感词，最长不超过 32 个字符。（必传）
      * @return mixed
@@ -56,6 +58,7 @@ class RongSetting extends Rongcloud
         }
     }
     /**
+     * TODO
      * 查询敏感词列表
      * @return mixed
      */

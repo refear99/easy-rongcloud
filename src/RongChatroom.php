@@ -19,6 +19,7 @@ use Refear99\EasyRongcloud\Exceptions\UserException;
 class RongChatroom extends Rongcloud
 {
     /**
+     * TODO
      * 创建聊天室
      * @param array $data   key:要创建的聊天室的id；val:要创建的聊天室的name。（必传）
      * @return json|xml
@@ -42,6 +43,7 @@ class RongChatroom extends Rongcloud
     }
 
     /**
+     * TODO
      * 销毁聊天室
      * @param $chatroomId   要销毁的聊天室 Id。（必传）
      * @return json|xml
@@ -60,6 +62,7 @@ class RongChatroom extends Rongcloud
     }
 
     /**
+     * TODO
      * 查询聊天室信息 方法
      * @param $chatroomId   要查询的聊天室id（必传）
      * @return json|xml
@@ -78,6 +81,7 @@ class RongChatroom extends Rongcloud
     }
 
     /**
+     * TODO
      * 查询聊天室内用户
      * @param $chatroomId 聊天室 Id
      */
