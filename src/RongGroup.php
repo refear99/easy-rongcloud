@@ -99,6 +99,41 @@ class RongGroup extends Rongcloud
     }
 
     /**
+     * 将用户从群中移除，不再接收该群组的消息。
+     *
+     * @param string $userId 要退出群的用户 Id。（必传）
+     * @param string $groupId 要退出的群 Id。（必传）
+     *
+     * @return mixed
+     */
+    public function groupQuit($userId, $groupId)
+    {
+        try {
+            if (empty($userId)) {
+                throw new GroupException('被同步群信息的用户 Id 不能为空');
+            }
+
+            if (empty($groupId)) {
+                throw new GroupException('加入的群 Id 不能为空');
+            }
+            $ret =
+                $this->curl('/group/quit', [
+                    'userId'  => $userId,
+                    "groupId" => $groupId
+                ]);
+
+            if (empty($ret)) {
+                throw new GroupException('请求失败');
+            }
+
+            return $this->createResponse($ret);
+
+        } catch (GroupException $e) {
+            throw new GroupException($e->getMessage());
+        }
+    }
+
+    /**
      * TODO
      * 向融云服务器提交 userId 对应的用户当前所加入的所有群组。
      *
@@ -124,34 +159,6 @@ class RongGroup extends Rongcloud
             }
 
             $ret = $this->curl('/group/sync', $params);
-            if (empty($ret))
-                throw new Exception('请求失败');
-
-            return $ret;
-        } catch (Exception $e) {
-            print_r($e->getMessage());
-        }
-    }
-
-    /**
-     * TODO
-     * 将用户从群中移除，不再接收该群组的消息。
-     *
-     * @param $userId       要退出群的用户 Id。（必传）
-     * @param $groupId      要退出的群 Id。（必传）
-     *
-     * @return mixed
-     */
-    public function groupQuit($userId, $groupId)
-    {
-        try {
-            if (empty($userId))
-                throw new Exception('被同步群信息的用户 Id 不能为空');
-            if (empty($groupId))
-                throw new Exception('加入的群 Id 不能为空');
-            $ret = $this->curl('/group/quit',
-                ['userId' => $userId, "groupId" => $groupId]
-            );
             if (empty($ret))
                 throw new Exception('请求失败');
 
