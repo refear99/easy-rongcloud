@@ -150,6 +150,14 @@ class Rongcloud
             throw new BaseException('Response Format Error');
         }
 
+        if (isset($response['code']) && $response['code'] != '200') {
+            if (isset($response['errorMessage'])) {
+                throw new BaseException('Rongcloud: ' . $response['errorMessage']);
+            } else {
+                throw new BaseException('Rongcloud Error');
+            }
+        }
+
         return $response;
     }
 }

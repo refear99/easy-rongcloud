@@ -54,7 +54,13 @@ class RongUser extends Rongcloud
                 throw new UserException('请求失败');
             }
 
-            return $this->createResponse($ret);
+            $result =  $this->createResponse($ret);
+
+            if (!isset($result['token'])) {
+                throw new UserException('获取TOKEN失败');
+            }
+
+            return $result;
 
         } catch (UserException $e) {
             throw new UserException($e->getMessage());
