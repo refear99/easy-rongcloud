@@ -19,6 +19,103 @@ use Refear99\EasyRongcloud\Exceptions\MessageException;
 class RongMessage extends Rongcloud
 {
     /**
+     * 获取消息类型对应的消息体结构
+     *
+     * @param string $type 消息类型
+     * @param array $data 消息数据
+     * @param array $extra 消息附加信息
+     *
+     * @return array
+     * @throws MessageException
+     */
+    public function getMessageStructure($type, array $data, array $extra = [])
+    {
+        switch ($type) {
+
+            case 'text':
+                $result = [
+                    'content' => $data['content']
+                ];
+                break;
+
+            case 'image':
+                $result = [
+                    'content'  => $data['content'],
+                    'imageUri' => $data['image_url']
+                ];
+                break;
+
+            case 'voice':
+                $result = [
+                    'content'  => $data['content'],
+                    'duration' => $data['duration']
+                ];
+                break;
+
+            case 'news':
+                $result = [
+                    'title'    => $data['title'],
+                    'content'  => $data['content'],
+                    'imageUri' => $data['image_url'],
+                    'url'      => $data['url'],
+                ];
+                break;
+
+            case 'lbs':
+                $result = [
+                    'content'   => $data['content'],
+                    'latitude'  => $data['latitude'],
+                    'longitude' => $data['longitude'],
+                    'poi'       => $data['poi'],
+                ];
+                break;
+
+            case 'contact':
+                $result = [
+                    'operation'    => $data['operation'],
+                    'sourceUserId' => $data['from_user_id'],
+                    'targetUserId' => $data['to_user_id'],
+                    'message'      => $data['message'],
+                ];
+                break;
+
+            case 'info':
+                $result = [
+                    'message' => $data['message']
+                ];
+                break;
+
+            case 'profile':
+                $result = [
+                    'operation' => $data['operation'],
+                    'data'      => $data['data']
+                ];
+                break;
+
+            case 'command_notify':
+                $result = [
+                    'name' => $data['operation'],
+                    'data' => $data['data']
+                ];
+                break;
+
+            case 'command_message':
+                $result = [
+                    'name' => $data['operation'],
+                    'data' => $data['data']
+                ];
+                break;
+
+            default:
+                throw new MessageException('Invalid Message Type');
+        }
+
+        $result['extra'] = $extra;
+
+        return $result;
+    }
+
+    /**
      * TODO
      * 发送会话消息
      *
