@@ -28,31 +28,31 @@ class RongMessage extends Rongcloud
      * @return array
      * @throws MessageException
      */
-    public function getMessageStructure($type, array $data, array $extra = [])
+    private static function getMessageStructure($type, array $data, array $extra = [])
     {
         switch ($type) {
 
-            case 'text':
+            case 'RC:TxtMsg':
                 $result = [
                     'content' => $data['content']
                 ];
                 break;
 
-            case 'image':
+            case 'RC:ImgMsg':
                 $result = [
                     'content'  => $data['content'],
                     'imageUri' => $data['image_url']
                 ];
                 break;
 
-            case 'voice':
+            case 'RC:VcMsg':
                 $result = [
                     'content'  => $data['content'],
                     'duration' => $data['duration']
                 ];
                 break;
 
-            case 'news':
+            case 'RC:ImgTextMsg':
                 $result = [
                     'title'    => $data['title'],
                     'content'  => $data['content'],
@@ -61,7 +61,7 @@ class RongMessage extends Rongcloud
                 ];
                 break;
 
-            case 'lbs':
+            case 'RC:LBSMsg':
                 $result = [
                     'content'   => $data['content'],
                     'latitude'  => $data['latitude'],
@@ -70,7 +70,7 @@ class RongMessage extends Rongcloud
                 ];
                 break;
 
-            case 'contact':
+            case 'RC:ContactNtf':
                 $result = [
                     'operation'    => $data['operation'],
                     'sourceUserId' => $data['from_user_id'],
@@ -79,27 +79,27 @@ class RongMessage extends Rongcloud
                 ];
                 break;
 
-            case 'info':
+            case 'RC:InfoNtf':
                 $result = [
                     'message' => $data['message']
                 ];
                 break;
 
-            case 'profile':
+            case 'RC:ProfileNtf':
                 $result = [
                     'operation' => $data['operation'],
                     'data'      => $data['data']
                 ];
                 break;
 
-            case 'command_notify':
+            case 'RC:CmdNtf':
                 $result = [
                     'name' => $data['operation'],
                     'data' => $data['data']
                 ];
                 break;
 
-            case 'command_message':
+            case 'RC:CmdMsg':
                 $result = [
                     'name' => $data['operation'],
                     'data' => $data['data']
@@ -113,6 +113,180 @@ class RongMessage extends Rongcloud
         $result['extra'] = $extra;
 
         return $result;
+    }
+
+    /**
+     * 文本消息
+     *
+     * @param string $message
+     * @param array $extra
+     *
+     * @return array
+     * @throws MessageException
+     */
+    public static function textMessage($message, $extra = [])
+    {
+        $data = self::getMessageStructure('RC:TxtMsg', ['content' => $message], $extra);
+
+        return ['type' => 'RC:TxtMsg', 'data' => json_encode($data)];
+    }
+
+    /**
+     * 图片消息
+     *
+     * @param string $message
+     * @param string $image
+     * @param array $extra
+     *
+     * @return array
+     * @throws MessageException
+     */
+    public static function imageMessage($message, $image, $extra = [])
+    {
+        $data = self::getMessageStructure('RC:ImgMsg', ['content' => $message, 'image_url' => $image], $extra);
+
+        return ['type' => 'RC:ImgMsg', 'data' => json_encode($data)];
+    }
+
+    /**
+     * 语音消息
+     *
+     * @param string $message
+     * @param string $duration
+     * @param array $extra
+     *
+     * @return array
+     * @throws MessageException
+     */
+    public static function voiceMessage($message, $duration, $extra = [])
+    {
+        $data = self::getMessageStructure('RC:VcMsg', ['content' => $message, 'duration' => $duration], $extra);
+
+        return ['type' => 'RC:VcMsg', 'data' => json_encode($data)];
+    }
+
+    /**
+     * 图文消息
+     *
+     * @param string $title
+     * @param string $message
+     * @param string $image
+     * @param string $url
+     * @param array $extra
+     *
+     * @return array
+     * @throws MessageException
+     */
+    public static function newsMessage($title, $message, $image, $url, $extra = [])
+    {
+        $data = self::getMessageStructure('RC:ImgTextMsg', ['title' => $title, 'content' => $message, 'image_url' => $image, 'url' => $url], $extra);
+
+        return ['type' => 'RC:ImgTextMsg', 'data' => json_encode($data)];
+    }
+
+    /**
+     * 位置消息
+     *
+     * @param string $message
+     * @param string $latitude
+     * @param string $longitude
+     * @param string $poi
+     * @param array $extra
+     *
+     * @return array
+     * @throws MessageException
+     */
+    public static function locationMessage($message, $latitude, $longitude, $poi, $extra = [])
+    {
+        $data = self::getMessageStructure('RC:LBSMsg', ['content' => $message, 'latitude' => $latitude, 'longitude' => $longitude, 'poi' => $poi], $extra);
+
+        return ['type' => 'RC:LBSMsg', 'data' => json_encode($data)];
+    }
+
+    /**
+     * 联系人消息
+     *
+     * @param string $message
+     * @param string $operation
+     * @param string $from_user_id
+     * @param string $to_user_id
+     * @param array $extra
+     *
+     * @return array
+     * @throws MessageException
+     */
+    public static function contactMessage($message, $operation, $from_user_id, $to_user_id, $extra = [])
+    {
+        $data = self::getMessageStructure('RC:ContactNtf', ['message' => $message, 'operation' => $operation, 'from_user_id' => $from_user_id, 'to_user_id' => $to_user_id], $extra);
+
+        return ['type' => 'RC:ContactNtf', 'data' => json_encode($data)];
+    }
+
+    /**
+     * 提示消息
+     *
+     * @param string $message
+     * @param array $extra
+     *
+     * @return array
+     * @throws MessageException
+     */
+    public static function infoMessage($message, $extra = [])
+    {
+        $data = self::getMessageStructure('RC:InfoNtf', ['message' => $message], $extra);
+
+        return ['type' => 'RC:InfoNtf', 'data' => json_encode($data)];
+    }
+
+    /**
+     * 资料更新消息
+     *
+     * @param string $operation
+     * @param array $data
+     * @param array $extra
+     *
+     * @return array
+     * @throws MessageException
+     */
+    public static function profileMessage($operation, array $data, $extra = [])
+    {
+        $data = self::getMessageStructure('RC:ProfileNtf', ['operation' => $operation, 'data' => $data], $extra);
+
+        return ['type' => 'RC:ProfileNtf', 'data' => json_encode($data)];
+    }
+
+    /**
+     * 命令通知消息
+     *
+     * @param string $operation
+     * @param array $data
+     * @param array $extra
+     *
+     * @return array
+     * @throws MessageException
+     */
+    public static function cmdNotifyMessage($operation, array $data, $extra = [])
+    {
+        $data = self::getMessageStructure('RC:CmdNtf', ['operation' => $operation, 'data' => $data], $extra);
+
+        return ['type' => 'RC:CmdNtf', 'data' => json_encode($data)];
+    }
+
+    /**
+     * 命令消息
+     *
+     * @param string $operation
+     * @param array $data
+     * @param array $extra
+     *
+     * @return array
+     * @throws MessageException
+     */
+    public static function cmdMessage($operation, array $data, $extra = [])
+    {
+        $data = self::getMessageStructure('RC:CmdMsg', ['operation' => $operation, 'data' => $data], $extra);
+
+        return ['type' => 'RC:CmdMsg', 'data' => json_encode($data)];
     }
 
     /**
