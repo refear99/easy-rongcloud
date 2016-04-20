@@ -134,4 +134,82 @@ class RongChatroom extends Rongcloud
             throw new ChatroomException($e->getMessage());
         }
     }
+
+    /**
+     * 禁言聊天室内用户
+     *
+     * @param string $chatroomId
+     * @param string $userId
+     * @param int $minute
+     *
+     * @return mixed
+     * @throws ChatroomException
+     * @throws Exceptions\BaseException
+     */
+    public function gagChatroomUser($chatroomId, $userId, $minute)
+    {
+        try {
+            if (empty($chatroomId)) {
+                throw new ChatroomException('聊天室 Id 不能为空');
+            }
+
+            if (empty($userId)) {
+                throw new ChatroomException('用户 Id 不能为空');
+            }
+
+            if (empty($minute)) {
+                throw new ChatroomException('禁言时间不能为空');
+            }
+
+            $ret = $this->curl('/chatroom/user/gag/add', ['userId' => $userId, 'chatroomId' => $chatroomId, 'minute' => $minute]);
+
+            if (empty($ret)) {
+                throw new ChatroomException('请求失败');
+            }
+
+            return $this->createResponse($ret);
+
+        } catch (ChatroomException $e) {
+            throw new ChatroomException($e->getMessage());
+        }
+    }
+
+    /**
+     * 封禁聊天室内用户
+     *
+     * @param string $chatroomId
+     * @param string $userId
+     * @param int $minute
+     *
+     * @return mixed
+     * @throws ChatroomException
+     * @throws Exceptions\BaseException
+     */
+    public function blockChatroomUser($chatroomId, $userId, $minute)
+    {
+        try {
+            if (empty($chatroomId)) {
+                throw new ChatroomException('聊天室 Id 不能为空');
+            }
+
+            if (empty($userId)) {
+                throw new ChatroomException('用户 Id 不能为空');
+            }
+
+            if (empty($minute)) {
+                throw new ChatroomException('禁言时间不能为空');
+            }
+
+            $ret = $this->curl('/chatroom/user/block/add', ['userId' => $userId, 'chatroomId' => $chatroomId, 'minute' => $minute]);
+
+            if (empty($ret)) {
+                throw new ChatroomException('请求失败');
+            }
+
+            return $this->createResponse($ret);
+
+        } catch (ChatroomException $e) {
+            throw new ChatroomException($e->getMessage());
+        }
+    }
 }
