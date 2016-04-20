@@ -78,48 +78,60 @@ class RongChatroom extends Rongcloud
     }
 
     /**
-     * TODO
-     * 查询聊天室信息 方法
+     * 查询聊天室信息
      *
-     * @param $chatroomId   要查询的聊天室id（必传）
+     * @param string $chatroomId
      *
-     * @return json|xml
+     * @return mixed
+     * @throws ChatroomException
+     * @throws Exceptions\BaseException
      */
     public function chatroomQuery($chatroomId)
     {
         try {
-            if (empty($chatroomId))
-                throw new Exception('要查询的聊天室 Id 不能为空');
-            $ret = $this->curl('/chatroom/query', ['chatroomId' => $chatroomId]);
-            if (empty($ret))
-                throw new Exception('请求失败');
+            if (empty($chatroomId)) {
+                throw new ChatroomException('要查询的聊天室 Id 不能为空');
+            }
 
-            return $ret;
-        } catch (Exception $e) {
-            print_r($e->getMessage());
+            $ret = $this->curl('/chatroom/query', ['chatroomId' => $chatroomId]);
+
+            if (empty($ret)) {
+                throw new ChatroomException('请求失败');
+            }
+
+            return $this->createResponse($ret);
+
+        } catch (ChatroomException $e) {
+            throw new ChatroomException($e->getMessage());
         }
     }
 
     /**
-     * TODO
      * 查询聊天室内用户
      *
-     * @param $chatroomId 聊天室 Id
+     * @param string $chatroomId
+     *
+     * @return mixed
+     * @throws ChatroomException
+     * @throws Exceptions\BaseException
      */
     public function userChatroomQuery($chatroomId)
     {
         try {
             if (empty($chatroomId)) {
-                throw new Exception('聊天室 Id 不能为空');
-            }
-            $ret = $this->curl('/chatroom/user/query', ['chatroomId' => $chatroomId]);
-            if (empty($ret)) {
-                throw new Exception('请求失败');
+                throw new ChatroomException('聊天室 Id 不能为空');
             }
 
-            return $ret;
-        } catch (Exception $e) {
-            print_r($e->getMessage());
+            $ret = $this->curl('/chatroom/user/query', ['chatroomId' => $chatroomId]);
+
+            if (empty($ret)) {
+                throw new ChatroomException('请求失败');
+            }
+
+            return $this->createResponse($ret);
+
+        } catch (ChatroomException $e) {
+            throw new ChatroomException($e->getMessage());
         }
     }
 }
